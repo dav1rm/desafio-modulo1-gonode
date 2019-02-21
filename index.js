@@ -2,7 +2,7 @@ const express = require('express')
 const nunjucks = require('nunjucks')
 
 const app = express()
-// Configurando nunjacks
+// Configurando nunjucks
 nunjucks.configure('views', {
   autoescape: true,
   express: app,
@@ -11,7 +11,7 @@ nunjucks.configure('views', {
 
 // Express trabalhar com formularios
 app.use(express.urlencoded({ extended: false }))
-// Setando template nunjacks
+// Setando template nunjucks
 app.set('view engine', 'njk')
 
 // Middlware para validar query param idade
