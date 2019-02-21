@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: false }))
 // Setando template nunjacks
 app.set('view engine', 'njk')
 
+// Middlware para validar query param idade
 const validatorMiddlware = (req, res, next) => {
   if (!req.query.idade) {
     return res.redirect('/')
@@ -27,20 +28,24 @@ app.get('/', (req, res) => {
 
 // Rota para checar a idade digitada
 app.post('/check', (req, res) => {
-  if (req.body.age >= 18) {
-    return res.redirect(`/major?idade=${req.body.age}`)
+  const { age } = req.body
+  if (age >= 18) {
+    return res.redirect(`/major?idade=${age}`)
   }
-  return res.redirect(`/minor?idade=${req.body.age}`)
+  return res.redirect(`/minor?idade=${age}`)
 })
 
 // Rota para mostrar pagina com mensagem
 app.get('/major', validatorMiddlware, (req, res) => {
-  return res.render('major', { idade: req.query.idade })
+  const { idade } = req.query
+  return res.render('major', { idade })
 })
 
 // Rota para mostrar pagina com mensagem
 app.get('/minor', validatorMiddlware, (req, res) => {
-  return res.render('minor', { idade: req.query.idade })
+  const { idade } = req.query
+  return res.render('minor', { idade })
 })
 
+// Setando porta
 app.listen(3000)
